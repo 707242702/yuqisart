@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-condensed: "Archivo Narrow", sans-serif;
+  --color-bg: #F2EEE6;
+  --color-ink: #15191A;
+  --color-accent-orange: #DB562E;
+  --color-accent-blue-light: #8DB7D2;
+  --color-accent-blue-dark: #3C6CA2;
+  --jitter-1: 2px 5px 3px 7px / 7px 3px 5px 2px;
+  --jitter-2: 5px 2px 7px 3px / 3px 7px 2px 5px;
+  --jitter-3: 3px 7px 2px 5px / 5px 2px 7px 3px;
+  --jitter-4: 7px 3px 5px 2px / 2px 5px 3px 7px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  ::selection {
+    background: var(--color-accent-orange);
+    color: white;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+  }
+
+  /* Custom Scrollbar for Lightbox Panels */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(21, 25, 26, 0.2) transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(21, 25, 26, 0.4);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(21, 25, 26, 0.6);
+  }
+
+  .fuzzy {
+    filter: url(#fuzzy);
+  }
+
+  .organic-blob {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+
+  .organic-blob-alt {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  .furry-shadow {
+    box-shadow: 0 0 15px rgba(21, 25, 26, 0.1), 0 0 30px rgba(21, 25, 26, 0.05);
+  }
+
+  @keyframes jitter {
+    0% { border-radius: var(--jitter-1); }
+    25% { border-radius: var(--jitter-2); }
+    50% { border-radius: var(--jitter-3); }
+    75% { border-radius: var(--jitter-4); }
+    100% { border-radius: var(--jitter-1); }
+  }
+
+  .jitter-hover:hover {
+    animation: jitter 0.3s infinite;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&display=swap');
