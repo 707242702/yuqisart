@@ -1505,12 +1505,11 @@ const AboutPage = () => (
       <PageTitle text="About the Studio" />
       
       <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start text-left">
-        <div className="w-full md:w-[45%] aspect-[4/5] bg-ink/5 overflow-hidden shadow-sm relative group">
-          <img 
-            src="https://picsum.photos/seed/yuqi-studio/1000/1250?grayscale" 
-            alt="Yuqi's Studio" 
+        <div className="w-full md:w-[48%] aspect-square bg-ink/5 overflow-hidden shadow-sm relative group">
+          <img
+            src="/images/about-studio.jpg"
+            alt="Yuqi's Studio"
             className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-[3s]"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 border-[10px] md:border-[20px] border-bg/20 pointer-events-none" />
         </div>
