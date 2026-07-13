@@ -1887,10 +1887,10 @@ export default function App() {
                   <div className="space-y-4">
                     <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent-orange">EMAIL DRAFT OPENED</p>
                     <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter leading-tight">
-                      Please send it<br />from your email app.
+                      Please send it<br />in Gmail.
                     </h3>
                     <p className="text-sm text-ink/50 leading-relaxed max-w-sm mx-auto">
-                      Attach your pet photo before sending. Yuqi will reply after receiving your email.
+                      Please click Send in Gmail. Your email address is included in the draft so Yuqi can reply after receiving it.
                     </p>
                   </div>
                   <button
@@ -1997,24 +1997,36 @@ export default function App() {
                         <button
                           type="button"
                           onClick={() => setOrderPortraitStyle('AUTHENTIC')}
-                          className="text-left group/card flex flex-col"
+                          className={`text-left group/card flex flex-col rounded-xl p-2 transition-all ${
+                            orderPortraitStyle === 'AUTHENTIC' ? 'bg-white shadow-md' : 'bg-transparent hover:bg-white/60'
+                          }`}
                         >
                           <div className={`w-full aspect-square bg-ink/5 rounded-lg overflow-hidden border-2 transition-all relative ${orderPortraitStyle === 'AUTHENTIC' ? 'border-ink shadow-lg scale-[1.02]' : 'border-transparent'}`}>
                             <img src="/images/clean/compare-01-b.png" alt="Authentic art" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover/card:opacity-0" />
                             <img src="/images/clean/compare-01-a.png" alt="Authentic original" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover/card:opacity-100" />
+                            {orderPortraitStyle === 'AUTHENTIC' && (
+                              <span className="absolute top-3 right-3 bg-ink text-bg text-[8px] uppercase tracking-widest font-bold px-3 py-1 rounded-full">Selected</span>
+                            )}
                           </div>
+                          <span className="text-[10px] text-ink uppercase tracking-widest font-bold mt-3 block">Authentic</span>
                           <span className="text-[9px] text-ink/40 uppercase tracking-wider mt-2 block">Natural Colors From Your Photo</span>
                         </button>
 
                         <button
                           type="button"
                           onClick={() => setOrderPortraitStyle('ARTISTIC')}
-                          className="text-left group/card flex flex-col"
+                          className={`text-left group/card flex flex-col rounded-xl p-2 transition-all ${
+                            orderPortraitStyle === 'ARTISTIC' ? 'bg-white shadow-md' : 'bg-transparent hover:bg-white/60'
+                          }`}
                         >
                           <div className={`w-full aspect-square bg-ink/5 rounded-lg overflow-hidden border-2 transition-all relative ${orderPortraitStyle === 'ARTISTIC' ? 'border-ink shadow-lg scale-[1.02]' : 'border-transparent'}`}>
                             <img src="/images/clean/compare-06-b.jpg" alt="Artistic art" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 group-hover/card:opacity-0" />
                             <img src="/images/clean/compare-06-a.png" alt="Artistic original" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover/card:opacity-100" />
+                            {orderPortraitStyle === 'ARTISTIC' && (
+                              <span className="absolute top-3 right-3 bg-ink text-bg text-[8px] uppercase tracking-widest font-bold px-3 py-1 rounded-full">Selected</span>
+                            )}
                           </div>
+                          <span className="text-[10px] text-ink uppercase tracking-widest font-bold mt-3 block">Artistic</span>
                           <span className="text-[9px] text-ink/40 uppercase tracking-wider mt-2 block">Yuqi Signature Series: Limited Palette Edition</span>
                         </button>
                       </div>
@@ -2157,13 +2169,13 @@ export default function App() {
                       placeholder="your@email.com"
                       className="w-full bg-ink/5 border border-ink/10 rounded-lg px-4 py-3 text-sm text-ink placeholder:text-ink/30 focus:outline-none focus:border-accent-orange transition-colors"
                     />
-                    <p className="text-[8px] uppercase tracking-widest text-ink/30">Yuqi will reply to confirm your order details.</p>
+                    <p className="text-[8px] uppercase tracking-widest text-ink/30">This email will be included in the Gmail draft so Yuqi can reply.</p>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-ink/5">
                   <p className="text-[10px] uppercase tracking-widest text-ink/40 mb-6 text-center italic">
-                    Portraits: 1 pet $80, 2 pets $120, 3 pets $160. Window Art from $45. Yuqi will confirm details after reviewing your photos.
+                    Portraits: 1 pet $80, 2 pets $120, 3 pets $160. Window Art from $45. Submit opens a Gmail draft to Yuqi.
                   </p>
                   <button
                     type="submit"
@@ -2178,7 +2190,7 @@ export default function App() {
                         : 'bg-ink/20 text-ink/40 cursor-not-allowed'
                     }`}
                   >
-                    Submit Request
+                    Open Gmail Draft
                   </button>
                   {!(customerEmail && (orderProductType === 'DIGITAL PORTRAIT' ? (orderPortraitStyle && hasUploadedPhoto) : (hasUploadedPhoto && (orderWindowColor || (isCustomColor && customColorText))))) && (
                     <p className="text-[8px] uppercase tracking-widest text-center text-accent-orange/60 font-bold mt-4">
