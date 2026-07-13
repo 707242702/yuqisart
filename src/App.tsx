@@ -214,16 +214,15 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen, setActiveOverla
 
           {/* Highlighted Social Links */}
           <div className="flex gap-3 items-center mt-2">
-            <motion.button
-              type="button"
-              onClick={() => openEmailDraft("Inquiry - Yuqi's Art")}
+            <motion.a
+              href={buildMailto("Inquiry - Yuqi's Art")}
               whileHover={{ scale: 1.2, rotate: -5 }}
               whileTap={{ scale: 0.9 }}
               className="w-7 h-7 flex items-center justify-center bg-[#DB562E] text-white fuzzy shadow-lg"
               style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}
             >
               <Mail size={12} strokeWidth={2} />
-            </motion.button>
+            </motion.a>
             <motion.a 
               href="https://www.instagram.com/spaceyuqio/" 
               target="_blank" 
@@ -235,16 +234,6 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen, setActiveOverla
             >
               <Instagram size={12} strokeWidth={2} />
             </motion.a>
-            <motion.button
-              type="button"
-              onClick={() => openEmailDraft("Inquiry - Yuqi's Art")}
-              whileHover={{ scale: 1.2, rotate: -8 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-7 h-7 flex items-center justify-center bg-[#3C6CA2] text-white fuzzy shadow-lg"
-              style={{ borderRadius: '70% 30% 30% 70% / 30% 70% 70% 30%' }}
-            >
-              <Mail size={12} strokeWidth={2} />
-            </motion.button>
           </div>
         </div>
       </div>
@@ -1482,9 +1471,8 @@ const BusinessPage = () => {
               The Studio creates custom decorative artwork and window displays for pet-friendly businesses, including pet stores, grooming salons, veterinary clinics, and cafés.
             </p>
             
-            <motion.button
-              type="button"
-              onClick={() => openEmailDraft(
+            <motion.a
+              href={buildMailto(
                 "Business Inquiry - Yuqi's Art",
                 "Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]"
               )}
@@ -1493,7 +1481,7 @@ const BusinessPage = () => {
               className="hidden lg:inline-block px-10 py-5 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.4em] hover:bg-accent-orange transition-all rounded-full"
             >
               INQUIRE FOR COLLABORATION →
-            </motion.button>
+            </motion.a>
           </div>
 
           {/* Right Side: Process */}
@@ -1529,16 +1517,15 @@ const BusinessPage = () => {
             </div>
 
             <div className="lg:hidden flex justify-start pt-8">
-              <motion.button
-                type="button"
-                onClick={() => openEmailDraft(
+              <motion.a
+                href={buildMailto(
                   "Business Inquiry - Yuqi's Art",
                   "Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]"
                 )}
                 className="px-10 py-5 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.4em] hover:bg-accent-orange transition-all rounded-full"
               >
                 INQUIRE FOR COLLABORATION →
-              </motion.button>
+              </motion.a>
             </div>
           </div>
         </div>
