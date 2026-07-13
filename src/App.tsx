@@ -9,6 +9,20 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ArrowRight, Github, Twitter, Instagram, PawPrint, ChevronDown, ChevronLeft, ChevronRight, PlayCircle, Dog, Mail, Send } from 'lucide-react';
 
 const CONTACT_EMAIL = 'luyuqi0726@gmail.com';
+const PAGE_PATHS: Record<string, string> = {
+  HOME: '/',
+  PORTRAITS: '/portraits',
+  'WINDOW ART': '/window-art',
+  COMMISSION: '/commission',
+  'FOR BUSINESS': '/business',
+  ABOUT: '/about',
+};
+
+const PATH_PAGES = Object.fromEntries(
+  Object.entries(PAGE_PATHS).map(([page, path]) => [path, page])
+) as Record<string, string>;
+
+const getPageFromPath = (path: string) => PATH_PAGES[path.replace(/\/$/, '') || '/'] || 'HOME';
 
 const buildEmailUrl = (subject: string, body?: string) => {
   const params = new URLSearchParams({ view: 'cm', fs: '1', to: CONTACT_EMAIL, su: subject });
@@ -1611,7 +1625,9 @@ const AboutPage = () => (
 );
 
 export default function App() {
-  const [activePage, setActivePage] = useState('HOME');
+  const [activePage, setActivePageState] = useState(() => (
+    typeof window === 'undefined' ? 'HOME' : getPageFromPath(window.location.pathname)
+  ));
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeOverlay, setActiveOverlay] = useState<string | null>(null);
   const [showOrderPopup, setShowOrderPopup] = useState(false);
@@ -1627,6 +1643,26 @@ export default function App() {
   const [customerEmail, setCustomerEmail] = useState('');
   const [orderSubmitted, setOrderSubmitted] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const setActivePage = (page: string) => {
+    setActivePageState(page);
+    const path = PAGE_PATHS[page] || '/';
+    if (typeof window !== 'undefined' && window.location.pathname !== path) {
+      window.history.pushState({ page }, '', path);
+    }
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActivePageState(getPageFromPath(window.location.pathname));
+      setIsMobileMenuOpen(false);
+      setActiveOverlay(null);
+      setShowOrderPopup(false);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const renderContent = () => {
     switch (activePage) {
       case 'HOME':
