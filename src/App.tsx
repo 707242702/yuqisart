@@ -6,7 +6,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import Matter from 'matter-js';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowRight, Github, Twitter, Instagram, PawPrint, ChevronDown, ChevronLeft, ChevronRight, PlayCircle, Dog, Mail, ExternalLink, Send } from 'lucide-react';
+import { Menu, X, ArrowRight, Github, Twitter, Instagram, PawPrint, ChevronDown, ChevronLeft, ChevronRight, PlayCircle, Dog, Mail, Send } from 'lucide-react';
 
 const AnimalFace = ({ type, color = "currentColor", size = 40, className = "" }: { type: 'CAT' | 'DOG' | 'SMILE', color?: string, size?: number, className?: string }) => {
   return (
@@ -223,15 +223,13 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen, setActiveOverla
               <Instagram size={12} strokeWidth={2} />
             </motion.a>
             <motion.a 
-              href="https://yuqilu.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
+              href="mailto:luyuqi0726@gmail.com?subject=Inquiry%20-%20Yuqi%27s%20Art" 
               whileHover={{ scale: 1.2, rotate: -8 }}
               whileTap={{ scale: 0.9 }}
               className="w-7 h-7 flex items-center justify-center bg-[#3C6CA2] text-white fuzzy shadow-lg"
               style={{ borderRadius: '70% 30% 30% 70% / 30% 70% 70% 30%' }}
             >
-              <ExternalLink size={12} strokeWidth={2} />
+              <Mail size={12} strokeWidth={2} />
             </motion.a>
           </div>
         </div>
@@ -778,12 +776,82 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
     <div ref={scrollRef} className="h-full overflow-y-auto font-sans bg-bg relative scroll-smooth custom-scrollbar">
       <div className="w-full pt-24 md:pt-[138px] px-6 md:pl-[104px] md:pr-16">
         <PageTitle text="Custom Pet Portraits" />
-        <div className="max-w-xl">
+        <div className="max-w-2xl">
           <p className="text-sm md:text-base leading-relaxed text-ink/60">
-            The Studio's portraits are hand-drawn illustrations based on your favorite photos. Each piece is delivered as a high-resolution digital file, ready for you to print or share.
+            Hand-drawn digital portraits created in my signature illustration style. Each portrait is carefully illustrated from your favorite photo and delivered as a high-resolution digital artwork, ready for printing, framing, or sharing.
           </p>
         </div>
-          <div className="w-full h-[1px] bg-ink/5 mt-6 md:mt-8 mb-8" />
+
+        <div className="w-full h-[1px] bg-ink/5 mt-8 md:mt-10 mb-10" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 mb-12 md:mb-16">
+          <section>
+            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-ink/40 mb-6">Pricing</h3>
+            <div className="space-y-4">
+              {[
+                { label: '1 Pet', price: '$80' },
+                { label: '2 Pets', price: '$120' },
+                { label: '3 Pets', price: '$160' },
+              ].map((pkg) => (
+                <div key={pkg.label} className="flex items-center justify-between border-b border-ink/5 pb-4">
+                  <span className="text-sm md:text-base font-bold uppercase tracking-[0.18em] text-ink">{pkg.label}</span>
+                  <span className="text-sm md:text-base font-bold text-accent-orange">{pkg.price}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-[10px] md:text-[11px] leading-relaxed text-ink/45 max-w-md">
+              Digital file only. Printing is not included.
+            </p>
+          </section>
+
+          <section>
+            <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-ink/40 mb-6">What's Included</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+              {[
+                'High-resolution digital artwork',
+                'Print-ready PNG or JPG upon request',
+                'Personal use',
+                'Two minor revisions included',
+                'Typical turnaround: 5-7 business days',
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3 border-b border-ink/5 pb-4">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent-orange flex-shrink-0" />
+                  <span className="text-[11px] md:text-xs leading-relaxed text-ink/65">{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="border-t border-b border-ink/5 py-8 md:py-10 mb-12 md:mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.7fr_1.3fr_auto] gap-8 lg:gap-10 items-start lg:items-center">
+            <div>
+              <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent-orange mb-3">How to Order</h3>
+              <p className="text-[11px] md:text-xs leading-relaxed text-ink/45">
+                A quick overview before you start.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
+              {[
+                { step: '01', text: 'Submit your order through the Commission page.' },
+                { step: '02', text: 'Upload your favorite pet photo and provide any notes.' },
+                { step: '03', text: 'Your portrait is illustrated and delivered as high-resolution digital artwork.' },
+              ].map((item) => (
+                <div key={item.step} className="flex gap-4">
+                  <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-ink/30">{item.step}</span>
+                  <p className="text-[11px] md:text-xs leading-relaxed text-ink/65">{item.text}</p>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => setActivePage('COMMISSION')}
+              className="flex w-fit px-8 py-4 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.35em] hover:bg-accent-orange transition-all rounded-full items-center gap-3"
+            >
+              Commission Page <ArrowRight size={14} />
+            </button>
+          </div>
+        </section>
           
           <div className="flex flex-col md:flex-row justify-end items-start md:items-end gap-6 md:gap-8 mb-12 md:mb-24">
             {/* Balloon Navigation */}
@@ -892,48 +960,6 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
           )}
         </AnimatePresence>
 
-        {/* Bottom CTA */}
-        <div className="mt-20 md:mt-40 mb-10 md:mb-20 py-16 md:py-32 border-t border-ink/10 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-6 md:space-y-8"
-          >
-            <h3 className="text-3xl md:text-7xl font-bold uppercase tracking-tighter max-w-3xl leading-[0.9]">
-              Every soul has a story.<br />Let's draw yours.
-            </h3>
-            <p className="text-xs md:text-sm text-[#444] tracking-widest max-w-md mx-auto leading-loose">
-              Custom portraits for pets, people, and the things you love.
-            </p>
-            <motion.button
-              onClick={() => setActivePage('FOR BUSINESS')}
-              whileHover="hover"
-              whileTap={{ scale: 0.98 }}
-              className="mt-8 md:mt-12 px-8 md:px-12 py-4 md:py-6 border-[2.5px] border-ink bg-white/20 text-ink text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] rounded-full transition-all relative overflow-hidden group jitter-hover"
-            >
-              <motion.div 
-                className="absolute inset-0 bg-ink"
-                variants={{
-                  hover: { y: 0 }
-                }}
-                initial={{ y: "100%" }}
-                transition={{ type: "tween", ease: "easeInOut", duration: 0.4 }}
-              />
-              <span className="relative z-10 group-hover:text-bg transition-colors flex items-center gap-4 mx-auto">
-                Get Started
-                <motion.div
-                  variants={{
-                    hover: { x: 8 }
-                  }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <ArrowRight size={16} />
-                </motion.div>
-              </span>
-            </motion.button>
-          </motion.div>
-        </div>
       </div>
 
       {/* Lightbox / Expanded View */}
@@ -1007,16 +1033,17 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
                     }}
                     className="w-full py-4 bg-[#DB562E] text-white uppercase text-[11px] font-bold tracking-[0.2em] hover:bg-ink transition-all shadow-lg flex items-center justify-center gap-3 mb-8"
                   >
-                    ORDER A SOUL-STUDY →
+                    ORDER A PORTRAIT →
                   </button>
                   
                   <div className="space-y-4 border-t border-b border-ink/5 py-6 mb-8">
                     {[
                       { label: 'Type', value: 'Custom Digital Pet Portrait' },
-                      { label: 'Format', value: 'High-resolution JPG or PNG (Square 1:1 by default)' },
-                      { label: 'Turnaround', value: 'Digital delivery within 3–5 days' },
+                      { label: 'Pricing', value: '1 Pet $80 / 2 Pets $120 / 3 Pets $160' },
+                      { label: 'Format', value: 'Print-ready PNG or JPG upon request' },
+                      { label: 'Turnaround', value: 'Digital delivery within 5-7 business days' },
                       { label: 'Usage', value: 'Personal use rights included (Perfect for prints, frames, or gifts)' },
-                      { label: 'Includes', value: '1/1 Unique Commission' }
+                      { label: 'Includes', value: 'High-resolution digital artwork + two minor revisions' }
                     ].map((row) => (
                       <div key={row.label} className="flex flex-col gap-0.5">
                         <span className="text-[8px] uppercase text-ink/40 tracking-[0.2em] font-bold">{row.label}</span>
@@ -1039,9 +1066,9 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
                       content: (
                         <ul className="space-y-3">
                           <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Order</span> Select your commission type.</li>
-                          <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Upload</span> Share 1-3 clear photos of your pet via the inquiry button.</li>
-                          <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Creation</span> Yuqi hand-draws your custom illustration with a focus on character and soul.</li>
-                          <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Delivery</span> Receive your high-resolution file, ready for any personal printing project.</li>
+                          <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Upload</span> Share your favorite pet photo and any notes.</li>
+                          <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Creation</span> Yuqi hand-draws your custom illustration in her signature style.</li>
+                          <li><span className="font-bold uppercase text-[9px] tracking-widest block mb-1">Delivery</span> Receive your high-resolution digital artwork, ready for printing or sharing.</li>
                         </ul>
                       )
                     },
@@ -1050,7 +1077,7 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
                       title: 'Important Notes', 
                       content: (
                         <div className="space-y-2 italic">
-                          <p>"One pet per portrait. For multi-pet compositions, please reach out via a custom inquiry."</p>
+                          <p>"Portrait pricing is based on the number of pets: 1 pet $80, 2 pets $120, 3 pets $160."</p>
                           <p>"Background colors and minor details are artistically adjusted to ensure the best minimalist result."</p>
                         </div>
                       )
@@ -1312,12 +1339,12 @@ const CommissionPage = ({ setShowOrderPopup }: { setShowOrderPopup: (show: boole
     { 
       num: '01', 
       title: 'PHOTOS', 
-      content: 'Share 2-5 clear photos of your pet (eye-level and natural light are best).' 
+      content: 'Share your favorite pet photo and any notes. Eye-level photos in natural light are best.' 
     },
     { 
       num: '02', 
       title: 'TYPE', 
-      content: 'Choose your artwork: Digital Portrait ($80) or 3D Window Art (From $45).' 
+      content: 'Choose your artwork: Digital Portrait (1 pet $80 / 2 pets $120 / 3 pets $160) or 3D Window Art (from $45).' 
     },
     { 
       num: '03', 
@@ -1338,7 +1365,7 @@ const CommissionPage = ({ setShowOrderPopup }: { setShowOrderPopup: (show: boole
           {/* Left Side: Intro & Action */}
           <div className="lg:w-1/3 flex flex-col items-start">
             <p className="text-sm md:text-base leading-relaxed text-ink/60 mb-12 max-w-sm text-left">
-              Yuqi creates custom artwork based on a photo of your pet. Available as a digital portrait or a bespoke physical window silhouette.
+              Yuqi creates custom artwork based on a photo of your pet. Digital portraits are delivered as high-resolution artwork files, and window art is made as a bespoke physical silhouette.
             </p>
             
             <div className="hidden lg:flex flex-col items-start gap-3">
@@ -1349,7 +1376,7 @@ const CommissionPage = ({ setShowOrderPopup }: { setShowOrderPopup: (show: boole
                 START YOUR ORDER <ArrowRight size={14} />
               </button>
               <span className="text-[10px] font-bold tracking-[0.2em] text-[#DB562E] uppercase pl-10">
-                COMMISSIONS START FROM $45
+                PORTRAITS FROM $80 · WINDOW ART FROM $45
               </span>
             </div>
           </div>
@@ -1383,7 +1410,7 @@ const CommissionPage = ({ setShowOrderPopup }: { setShowOrderPopup: (show: boole
                 START YOUR ORDER →
               </button>
               <span className="text-[10px] font-bold tracking-[0.2em] text-[#DB562E] uppercase pl-10">
-                COMMISSIONS START FROM $45
+                PORTRAITS FROM $80 · WINDOW ART FROM $45
               </span>
             </div>
           </div>
@@ -1696,18 +1723,18 @@ export default function App() {
                       q: "What are the pricing options?", 
                       a: (
                         <div className="space-y-1 mt-1">
-                          <p>Portraits: $80 (1/1 Digital Commission)</p>
+                          <p>Portraits: $80 (1 pet) / $120 (2 pets) / $160 (3 pets)</p>
                           <p>Window Art: $45 (12cm) / $60 (17cm) / $75 (25cm)</p>
                         </div>
                       )
                     },
                     { 
                       q: "What photos should I prepare?", 
-                      a: <>Clear photos with natural lighting work best. For <span className="font-bold">Digital Portraits</span>, <span className="font-bold">1</span>-<span className="font-bold">3</span> photos are ideal. For <span className="font-bold">Window Art</span>, please share <span className="font-bold">2</span>–<span className="font-bold">5</span> clear photos to capture your companion's unique silhouette.</> 
+                      a: <>Clear photos with natural lighting work best. For <span className="font-bold">Digital Portraits</span>, one favorite photo is enough, and extra references are welcome. For <span className="font-bold">Window Art</span>, please share <span className="font-bold">2</span>-<span className="font-bold">5</span> clear photos to capture your companion's unique silhouette.</> 
                     },
                     { 
                       q: "What is the expected turnaround time?", 
-                      a: <>Hand-drawn creation and production are usually completed within <span className="font-bold">1</span> week.</> 
+                      a: <>Digital portraits are typically delivered within <span className="font-bold">5-7 business days</span>. Window Art creation and production are usually completed within <span className="font-bold">1</span> week.</> 
                     },
                     { 
                       q: "Do you offer international shipping?", 
@@ -1844,12 +1871,12 @@ export default function App() {
                 >
                   <AnimalFace type="SMILE" color="#DB562E" size={72} />
                   <div className="space-y-4">
-                    <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent-orange">SUBMITTED!</p>
+                    <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent-orange">EMAIL DRAFT OPENED</p>
                     <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter leading-tight">
-                      Thank you for<br />sharing your story.
+                      Please send it<br />from your email app.
                     </h3>
                     <p className="text-sm text-ink/50 leading-relaxed max-w-sm mx-auto">
-                      Yuqi will reach out to you via email soon.
+                      Attach your pet photo before sending. Yuqi will reply after receiving your email.
                     </p>
                   </div>
                   <button
@@ -1863,7 +1890,7 @@ export default function App() {
               <>
               <div className="mb-10 flex justify-between items-start">
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter mb-2">Order Your Soul-Study</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter mb-2">Order Your Custom Artwork</h3>
                   <p className="text-[10px] md:text-[11px] uppercase tracking-widest text-ink/40">Hand-drawn in Seattle. Shipped Worldwide.</p>
                 </div>
                 <motion.div
@@ -1906,7 +1933,7 @@ export default function App() {
                   ? `Digital Portrait — ${orderPortraitStyle} style`
                   : `Window Art — ${orderWindowSize}, ${orderWindowColor || customColorText} color`;
                 const emailBody = encodeURIComponent(
-                  `Hi Yuqi,\n\nI'd like to commission a ${productLabel}.\n\nMy email: ${customerEmail}\n\nPlease find my pet photo(s) attached.\n\nLooking forward to hearing from you!`
+                  `Hi Yuqi,\n\nI'd like to commission a ${productLabel}.\n\nMy email: ${customerEmail}\n\nI will attach my pet photo(s) to this email before sending.\n\nLooking forward to hearing from you!`
                 );
                 const emailSubject = encodeURIComponent(`Commission Request: ${orderProductType}`);
                 window.location.href = `mailto:luyuqi0726@gmail.com?subject=${emailSubject}&body=${emailBody}`;
@@ -1916,7 +1943,7 @@ export default function App() {
                     <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">1. Product Type</label>
                     <div className="flex flex-wrap gap-6">
                       {[
-                        { id: 'DIGITAL PORTRAIT', label: 'DIGITAL PORTRAIT ($80)' },
+                        { id: 'DIGITAL PORTRAIT', label: 'DIGITAL PORTRAIT (FROM $80)' },
                         { id: 'WINDOW ART', label: 'BESPOKE WINDOW ART (FROM $45)' }
                       ].map(item => (
                         <label key={item.id} className="flex items-center gap-3 cursor-pointer group">
@@ -1937,6 +1964,21 @@ export default function App() {
                   {orderProductType === 'DIGITAL PORTRAIT' ? (
                     <div className="space-y-6">
                       <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">2. Select Style</label>
+                      <div className="grid grid-cols-3 gap-3">
+                        {[
+                          { pets: '1 Pet', price: '$80' },
+                          { pets: '2 Pets', price: '$120' },
+                          { pets: '3 Pets', price: '$160' },
+                        ].map((pkg) => (
+                          <div key={pkg.pets} className="border border-ink/10 bg-white/50 rounded-lg px-4 py-3">
+                            <p className="text-[9px] uppercase tracking-widest font-bold text-ink/50">{pkg.pets}</p>
+                            <p className="text-sm font-bold text-ink mt-1">{pkg.price}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-[9px] text-ink/40 leading-relaxed -mt-2">
+                        Every portrait includes high-resolution digital artwork, a print-ready PNG or JPG upon request, personal use, and two minor revisions.
+                      </p>
                       
                       <div className="grid grid-cols-2 gap-4">
                         <button
@@ -2108,7 +2150,7 @@ export default function App() {
 
                 <div className="pt-4 border-t border-ink/5">
                   <p className="text-[10px] uppercase tracking-widest text-ink/40 mb-6 text-center italic">
-                    Portraits from $80. Window Art from $45. Yuqi will confirm details after reviewing your photos.
+                    Portraits: 1 pet $80, 2 pets $120, 3 pets $160. Window Art from $45. Yuqi will confirm details after reviewing your photos.
                   </p>
                   <button
                     type="submit"
