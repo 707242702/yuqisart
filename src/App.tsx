@@ -761,7 +761,6 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
   const handleFilterChange = (cat: string) => {
     if (cat === filter) return;
     setFilter(cat);
-    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
