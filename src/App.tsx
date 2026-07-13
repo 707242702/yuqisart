@@ -10,14 +10,14 @@ import { Menu, X, ArrowRight, Github, Twitter, Instagram, PawPrint, ChevronDown,
 
 const CONTACT_EMAIL = 'luyuqi0726@gmail.com';
 
-const buildMailto = (subject: string, body?: string) => {
-  const params = new URLSearchParams({ subject });
+const buildEmailUrl = (subject: string, body?: string) => {
+  const params = new URLSearchParams({ view: 'cm', fs: '1', to: CONTACT_EMAIL, su: subject });
   if (body) params.set('body', body);
-  return `mailto:${CONTACT_EMAIL}?${params.toString()}`;
+  return `https://mail.google.com/mail/?${params.toString()}`;
 };
 
 const openEmailDraft = (subject: string, body?: string) => {
-  window.location.href = buildMailto(subject, body);
+  window.open(buildEmailUrl(subject, body), '_blank', 'noopener,noreferrer');
 };
 
 const AnimalFace = ({ type, color = "currentColor", size = 40, className = "" }: { type: 'CAT' | 'DOG' | 'SMILE', color?: string, size?: number, className?: string }) => {
@@ -215,7 +215,9 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen, setActiveOverla
           {/* Highlighted Social Links */}
           <div className="flex gap-3 items-center mt-2">
             <motion.a
-              href={buildMailto("Inquiry - Yuqi's Art")}
+              href={buildEmailUrl("Inquiry - Yuqi's Art")}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.2, rotate: -5 }}
               whileTap={{ scale: 0.9 }}
               className="w-7 h-7 flex items-center justify-center bg-[#DB562E] text-white fuzzy shadow-lg"
@@ -1472,10 +1474,12 @@ const BusinessPage = () => {
             </p>
             
             <motion.a
-              href={buildMailto(
+              href={buildEmailUrl(
                 "Business Inquiry - Yuqi's Art",
                 "Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]"
               )}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="hidden lg:inline-block px-10 py-5 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.4em] hover:bg-accent-orange transition-all rounded-full"
@@ -1518,10 +1522,12 @@ const BusinessPage = () => {
 
             <div className="lg:hidden flex justify-start pt-8">
               <motion.a
-                href={buildMailto(
+                href={buildEmailUrl(
                   "Business Inquiry - Yuqi's Art",
                   "Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]"
                 )}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-10 py-5 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.4em] hover:bg-accent-orange transition-all rounded-full"
               >
                 INQUIRE FOR COLLABORATION →
