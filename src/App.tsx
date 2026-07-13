@@ -849,10 +849,10 @@ const PortraitsPage = ({ setActivePage, setShowOrderPopup }: { setActivePage: (p
             </div>
             <button
               type="button"
-              onClick={() => setActivePage('COMMISSION')}
+              onClick={() => setShowOrderPopup(true)}
               className="flex w-fit px-8 py-4 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.35em] hover:bg-accent-orange transition-all rounded-full items-center gap-3"
             >
-              Commission Page <ArrowRight size={14} />
+              Start Order <ArrowRight size={14} />
             </button>
           </div>
         </section>
@@ -1616,6 +1616,7 @@ export default function App() {
   const [activeOverlay, setActiveOverlay] = useState<string | null>(null);
   const [showOrderPopup, setShowOrderPopup] = useState(false);
   const [orderProductType, setOrderProductType] = useState<'DIGITAL PORTRAIT' | 'WINDOW ART'>('DIGITAL PORTRAIT');
+  const [orderPetPackage, setOrderPetPackage] = useState<'1 Pet' | '2 Pets' | '3 Pets' | null>(null);
   const [orderPortraitStyle, setOrderPortraitStyle] = useState<'AUTHENTIC' | 'ARTISTIC' | null>(null);
   const [orderWindowColor, setOrderWindowColor] = useState<string | null>(null);
   const [orderWindowSize, setOrderWindowSize] = useState<string | null>(null);
@@ -1839,6 +1840,7 @@ export default function App() {
             onClick={() => {
               setShowOrderPopup(false);
               setOrderProductType('DIGITAL PORTRAIT');
+              setOrderPetPackage(null);
               setOrderPortraitStyle(null);
               setOrderWindowColor(null);
               setOrderWindowSize(null);
@@ -1861,6 +1863,7 @@ export default function App() {
                 onClick={() => {
                   setShowOrderPopup(false);
                   setOrderProductType('DIGITAL PORTRAIT');
+                  setOrderPetPackage(null);
                   setOrderPortraitStyle(null);
                   setOrderWindowColor(null);
                   setOrderWindowSize(null);
@@ -1927,13 +1930,14 @@ export default function App() {
               <form className="space-y-10" onSubmit={(e) => { 
                 e.preventDefault(); 
                 const isValid = customerEmail && (orderProductType === 'DIGITAL PORTRAIT'
-                  ? (orderPortraitStyle && hasUploadedPhoto)
+                  ? (orderPetPackage && orderPortraitStyle && hasUploadedPhoto)
                   : ((orderWindowColor || (isCustomColor && customColorText)) && orderWindowSize && hasUploadedPhoto));
                 
                 if (!isValid) return;
 
                 setOrderSubmitted(true);
                 setOrderProductType('DIGITAL PORTRAIT');
+                setOrderPetPackage(null);
                 setOrderPortraitStyle(null);
                 setOrderWindowColor(null);
                 setOrderWindowSize(null);
@@ -1944,7 +1948,7 @@ export default function App() {
                 setCustomerEmail('');
 
                 const productLabel = orderProductType === 'DIGITAL PORTRAIT'
-                  ? `Digital Portrait — ${orderPortraitStyle} style`
+                  ? `Digital Portrait — ${orderPetPackage}, ${orderPortraitStyle} style`
                   : `Window Art — ${orderWindowSize}, ${orderWindowColor || customColorText} color`;
                 openEmailDraft(
                   `Commission Request: ${orderProductType}`,
@@ -1965,7 +1969,11 @@ export default function App() {
                             name="productType" 
                             className="sr-only peer" 
                             checked={orderProductType === item.id}
-                            onChange={() => setOrderProductType(item.id as any)}
+                            onChange={() => {
+                              setOrderProductType(item.id as any);
+                              setOrderPetPackage(null);
+                              setOrderPortraitStyle(null);
+                            }}
                           />
                           <div className="w-4 h-4 rounded-full border border-ink/20 peer-checked:bg-accent-orange peer-checked:border-accent-orange transition-all" />
                           <span className="text-xs uppercase tracking-wider font-medium group-hover:text-accent-orange transition-colors">{item.label}</span>
@@ -1976,23 +1984,33 @@ export default function App() {
 
                   {orderProductType === 'DIGITAL PORTRAIT' ? (
                     <div className="space-y-6">
-                      <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">2. Select Style</label>
+                      <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">2. Select Package</label>
                       <div className="grid grid-cols-3 gap-3">
                         {[
                           { pets: '1 Pet', price: '$80' },
                           { pets: '2 Pets', price: '$120' },
                           { pets: '3 Pets', price: '$160' },
                         ].map((pkg) => (
-                          <div key={pkg.pets} className="border border-ink/10 bg-white/50 rounded-lg px-4 py-3">
-                            <p className="text-[9px] uppercase tracking-widest font-bold text-ink/50">{pkg.pets}</p>
-                            <p className="text-sm font-bold text-ink mt-1">{pkg.price}</p>
-                          </div>
+                          <button
+                            key={pkg.pets}
+                            type="button"
+                            onClick={() => setOrderPetPackage(pkg.pets as '1 Pet' | '2 Pets' | '3 Pets')}
+                            className={`text-left rounded-lg px-4 py-3 border transition-all ${
+                              orderPetPackage === pkg.pets
+                                ? 'bg-ink text-bg border-ink shadow-md scale-[1.02]'
+                                : 'bg-white/50 text-ink border-ink/10 hover:border-accent-orange hover:bg-white'
+                            }`}
+                          >
+                            <p className={`text-[9px] uppercase tracking-widest font-bold ${orderPetPackage === pkg.pets ? 'text-bg/70' : 'text-ink/50'}`}>{pkg.pets}</p>
+                            <p className={`text-sm font-bold mt-1 ${orderPetPackage === pkg.pets ? 'text-bg' : 'text-ink'}`}>{pkg.price}</p>
+                          </button>
                         ))}
                       </div>
                       <p className="text-[9px] text-ink/40 leading-relaxed -mt-2">
                         Every portrait includes high-resolution digital artwork, a print-ready PNG or JPG upon request, personal use, and two minor revisions.
                       </p>
                       
+                      <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">3. Select Style</label>
                       <div className="grid grid-cols-2 gap-4">
                         <button
                           type="button"
@@ -2130,7 +2148,7 @@ export default function App() {
                   )}
 
                   <div className="space-y-4">
-                    <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">3. Upload Photo</label>
+                    <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">{orderProductType === 'DIGITAL PORTRAIT' ? '4. Upload Photo' : '3. Upload Photo'}</label>
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -2161,7 +2179,7 @@ export default function App() {
                   </div>
 
                   <div className="space-y-4">
-                    <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">4. Your Email</label>
+                    <label className="block text-[10px] uppercase tracking-widest font-bold text-ink/60">{orderProductType === 'DIGITAL PORTRAIT' ? '5. Your Email' : '4. Your Email'}</label>
                     <input
                       type="email"
                       value={customerEmail}
@@ -2181,18 +2199,18 @@ export default function App() {
                     type="submit"
                     disabled={!customerEmail || (
                       orderProductType === 'DIGITAL PORTRAIT'
-                        ? (!orderPortraitStyle || !hasUploadedPhoto)
+                        ? (!orderPetPackage || !orderPortraitStyle || !hasUploadedPhoto)
                         : (!hasUploadedPhoto || (!orderWindowColor && (!isCustomColor || !customColorText)) || !orderWindowSize)
                     )}
                     className={`w-full py-5 uppercase text-[11px] font-bold tracking-[0.3em] rounded-full transition-all shadow-xl ${
-                      customerEmail && (orderProductType === 'DIGITAL PORTRAIT' ? (orderPortraitStyle && hasUploadedPhoto) : (hasUploadedPhoto && (orderWindowColor || (isCustomColor && customColorText)) && orderWindowSize))
+                      customerEmail && (orderProductType === 'DIGITAL PORTRAIT' ? (orderPetPackage && orderPortraitStyle && hasUploadedPhoto) : (hasUploadedPhoto && (orderWindowColor || (isCustomColor && customColorText)) && orderWindowSize))
                         ? 'bg-ink text-bg hover:bg-accent-orange'
                         : 'bg-ink/20 text-ink/40 cursor-not-allowed'
                     }`}
                   >
                     Open Gmail Draft
                   </button>
-                  {!(customerEmail && (orderProductType === 'DIGITAL PORTRAIT' ? (orderPortraitStyle && hasUploadedPhoto) : (hasUploadedPhoto && (orderWindowColor || (isCustomColor && customColorText))))) && (
+                  {!(customerEmail && (orderProductType === 'DIGITAL PORTRAIT' ? (orderPetPackage && orderPortraitStyle && hasUploadedPhoto) : (hasUploadedPhoto && (orderWindowColor || (isCustomColor && customColorText))))) && (
                     <p className="text-[8px] uppercase tracking-widest text-center text-accent-orange/60 font-bold mt-4">
                       Please complete all steps to continue
                     </p>
