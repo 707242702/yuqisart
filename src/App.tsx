@@ -8,6 +8,18 @@ import Matter from 'matter-js';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ArrowRight, Github, Twitter, Instagram, PawPrint, ChevronDown, ChevronLeft, ChevronRight, PlayCircle, Dog, Mail, Send } from 'lucide-react';
 
+const CONTACT_EMAIL = 'luyuqi0726@gmail.com';
+
+const buildMailto = (subject: string, body?: string) => {
+  const params = new URLSearchParams({ subject });
+  if (body) params.set('body', body);
+  return `mailto:${CONTACT_EMAIL}?${params.toString()}`;
+};
+
+const openEmailDraft = (subject: string, body?: string) => {
+  window.location.href = buildMailto(subject, body);
+};
+
 const AnimalFace = ({ type, color = "currentColor", size = 40, className = "" }: { type: 'CAT' | 'DOG' | 'SMILE', color?: string, size?: number, className?: string }) => {
   return (
     <svg width={size} height={size} viewBox="0 0 60 60" className={className} style={{ overflow: 'visible' }}>
@@ -202,15 +214,16 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen, setActiveOverla
 
           {/* Highlighted Social Links */}
           <div className="flex gap-3 items-center mt-2">
-            <motion.a 
-              href="mailto:luyuqi0726@gmail.com" 
+            <motion.button
+              type="button"
+              onClick={() => openEmailDraft("Inquiry - Yuqi's Art")}
               whileHover={{ scale: 1.2, rotate: -5 }}
               whileTap={{ scale: 0.9 }}
               className="w-7 h-7 flex items-center justify-center bg-[#DB562E] text-white fuzzy shadow-lg"
               style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}
             >
               <Mail size={12} strokeWidth={2} />
-            </motion.a>
+            </motion.button>
             <motion.a 
               href="https://www.instagram.com/spaceyuqio/" 
               target="_blank" 
@@ -222,15 +235,16 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen, setActiveOverla
             >
               <Instagram size={12} strokeWidth={2} />
             </motion.a>
-            <motion.a 
-              href="mailto:luyuqi0726@gmail.com?subject=Inquiry%20-%20Yuqi%27s%20Art" 
+            <motion.button
+              type="button"
+              onClick={() => openEmailDraft("Inquiry - Yuqi's Art")}
               whileHover={{ scale: 1.2, rotate: -8 }}
               whileTap={{ scale: 0.9 }}
               className="w-7 h-7 flex items-center justify-center bg-[#3C6CA2] text-white fuzzy shadow-lg"
               style={{ borderRadius: '70% 30% 30% 70% / 30% 70% 70% 30%' }}
             >
               <Mail size={12} strokeWidth={2} />
-            </motion.a>
+            </motion.button>
           </div>
         </div>
       </div>
@@ -1468,14 +1482,18 @@ const BusinessPage = () => {
               The Studio creates custom decorative artwork and window displays for pet-friendly businesses, including pet stores, grooming salons, veterinary clinics, and cafés.
             </p>
             
-            <motion.a 
-              href={`mailto:luyuqi0726@gmail.com?subject=${encodeURIComponent("Business Inquiry - Yuqi's Art")}&body=${encodeURIComponent("Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]")}`}
+            <motion.button
+              type="button"
+              onClick={() => openEmailDraft(
+                "Business Inquiry - Yuqi's Art",
+                "Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]"
+              )}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="hidden lg:inline-block px-10 py-5 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.4em] hover:bg-accent-orange transition-all rounded-full"
             >
               INQUIRE FOR COLLABORATION →
-            </motion.a>
+            </motion.button>
           </div>
 
           {/* Right Side: Process */}
@@ -1511,12 +1529,16 @@ const BusinessPage = () => {
             </div>
 
             <div className="lg:hidden flex justify-start pt-8">
-              <motion.a 
-                href={`mailto:luyuqi0726@gmail.com?subject=${encodeURIComponent("Business Inquiry - Yuqi's Art")}&body=${encodeURIComponent("Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]")}`}
+              <motion.button
+                type="button"
+                onClick={() => openEmailDraft(
+                  "Business Inquiry - Yuqi's Art",
+                  "Hi Yuqi,\n\nI am interested in collaborating with you for a business project.\n\n[Please describe your project here]"
+                )}
                 className="px-10 py-5 bg-ink text-bg uppercase text-[10px] font-bold tracking-[0.4em] hover:bg-accent-orange transition-all rounded-full"
               >
                 INQUIRE FOR COLLABORATION →
-              </motion.a>
+              </motion.button>
             </div>
           </div>
         </div>
@@ -1749,7 +1771,7 @@ export default function App() {
                     },
                     { 
                       q: "Do you offer custom sizes?", 
-                      a: <>Yes! We can accommodate custom dimensions for both portraits and window art. Please <a href="mailto:luyuqi0726@gmail.com?subject=Inquiry: Custom Size Project" className="text-accent-orange underline underline-offset-2">email us</a> for a bespoke quote.</> 
+                      a: <>Yes! We can accommodate custom dimensions for both portraits and window art. Please <button type="button" onClick={() => openEmailDraft("Inquiry: Custom Size Project")} className="bg-transparent border-0 p-0 text-accent-orange underline underline-offset-2 cursor-pointer">email us</button> for a bespoke quote.</> 
                     }
                   ].map((faq, i) => (
                     <div key={i} className="space-y-1.5">
@@ -1931,11 +1953,10 @@ export default function App() {
                 const productLabel = orderProductType === 'DIGITAL PORTRAIT'
                   ? `Digital Portrait — ${orderPortraitStyle} style`
                   : `Window Art — ${orderWindowSize}, ${orderWindowColor || customColorText} color`;
-                const emailBody = encodeURIComponent(
+                openEmailDraft(
+                  `Commission Request: ${orderProductType}`,
                   `Hi Yuqi,\n\nI'd like to commission a ${productLabel}.\n\nMy email: ${customerEmail}\n\nI will attach my pet photo(s) to this email before sending.\n\nLooking forward to hearing from you!`
                 );
-                const emailSubject = encodeURIComponent(`Commission Request: ${orderProductType}`);
-                window.location.href = `mailto:luyuqi0726@gmail.com?subject=${emailSubject}&body=${emailBody}`;
               }}>
                 <div className="space-y-8">
                   <div className="space-y-4">
@@ -2096,7 +2117,7 @@ export default function App() {
                             ))}
                           </div>
                           <p className="text-[9px] uppercase tracking-widest text-ink/40 mt-2">
-                            Need a specific size? <a href="mailto:luyuqi0726@gmail.com?subject=Inquiry: Custom Size Project" className="text-accent-orange underline underline-offset-2">Email Yuqi</a> to discuss your project.
+                            Need a specific size? <button type="button" onClick={() => openEmailDraft("Inquiry: Custom Size Project")} className="bg-transparent border-0 p-0 text-accent-orange underline underline-offset-2 cursor-pointer">Email Yuqi</button> to discuss your project.
                           </p>
                         </div>
                       </div>
